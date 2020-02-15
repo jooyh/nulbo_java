@@ -2,6 +2,7 @@ package configuration;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,7 +20,7 @@ import net.sf.log4jdbc.tools.LoggingType;
 @Configuration
 public class RootConfiguration {
 	
-	private static final String APP_CONFIG_FILE_PATH = "props/database.properties";
+	private static final String APP_CONFIG_FILE_PATH = "props/nulbo.properties";
 	
 	@Value("${db.driverClass}")
 	private Class jdbcDriverClassName; 
@@ -36,6 +37,7 @@ public class RootConfiguration {
 		ppc.setLocations(new Resource[] { new ClassPathResource(APP_CONFIG_FILE_PATH) }); 
 		return ppc; 
 	}
+	
 	@Bean 
 	public DataSource dataSourceSpied() { 
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource(); 
@@ -68,6 +70,7 @@ public class RootConfiguration {
 	
 	 @Bean 
 	 public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
-		 return new SqlSessionTemplate(sqlSessionFactory);
+		 SqlSessionTemplate session = new SqlSessionTemplate(sqlSessionFactory);
+		 return session;
 	 }
 }

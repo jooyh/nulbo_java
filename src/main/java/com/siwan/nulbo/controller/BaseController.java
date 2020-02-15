@@ -15,7 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public abstract class BaseController {
+public abstract class BaseController{
 	protected static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 	private static final String JSON_STRING_KEY = "jsonStr";
 	private static final String USER_SESSION_KEY = "userInfo";
