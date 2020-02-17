@@ -1,4 +1,4 @@
-package configuration;
+package com.siwan.nulbo.configuration;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;

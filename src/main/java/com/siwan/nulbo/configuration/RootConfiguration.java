@@ -1,4 +1,4 @@
-package configuration;
+package com.siwan.nulbo.configuration;
 
 import javax.sql.DataSource;
 
