@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="jsp_new" deleted="false" description="" enabled="true" name="nulbo jsp">&lt;%@ page language="java" contentType="text/html; charset=UTF-8"&#13;
+    pageEncoding="UTF-8"%&gt;&#13;
+&lt;%@ include file="/WEB-INF/views/layout/header.jsp" %&gt;&#13;
+&lt;section class='contents'&gt;&#13;
+&lt;/section&gt;&#13;
+&lt;%@ include file="/resources/pagejs/.js" %&gt; //PAGE_JS INCLUDE&#13;
+&lt;%@ include file="/WEB-INF/views/layout/footer.jsp" %&gt;</template></templates>
