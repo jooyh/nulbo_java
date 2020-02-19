@@ -13,12 +13,12 @@ public class UserService {
 
 	@Autowired
 	SqlSession sqlSession;
-	 
-	private static final String NAME_SPACE = "mappers.userService";
-	
-	public Map selectUser() {
-		List<Map> userList = sqlSession.selectList("selectUserInfo");
+
+	private static final String NAME_SPACE = "mappers.userService.";
+
+	public Map selectUser(Map param) {
+		List<Map> userList = sqlSession.selectList(NAME_SPACE+"selectUserInfo",param);
 		return (Map) new HashMap().put("userList", userList);
 	}
-	
+
 }

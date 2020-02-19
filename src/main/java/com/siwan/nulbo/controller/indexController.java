@@ -11,26 +11,26 @@ public class indexController extends BaseController{
 
 	@Autowired
 	UserService userService;
-	
+
 	@RequestMapping("/")
 	public String main() {
-		userService.selectUser();
-		return "home";
+//		userService.selectUser();
+		return "login";
 	}
-	
+
 	@RequestMapping("/login.do")
 	public String login() {
 		return "login";
 	}
-	
+
 	@RequestMapping("/userPage.do")
 	public String userPage() {
 		return "userPage";
 	}
-	
+
 	@RequestMapping("/timeline.do")
 	public String timeline() {
 		return "timeline";
 	}
-	
+
 }

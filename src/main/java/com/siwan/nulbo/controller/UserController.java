@@ -14,12 +14,15 @@ import com.siwan.nulbo.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController{
-	
+
 	@Autowired
 	private UserService userService;
+
+	@RequestMapping("/selectUserInfo.do")
 	public Map getUserInfo(HttpServletRequest request) {
 		Map rtnMap = new HashMap();
 		Map paramMap = getParamMap(request);
+		userService.selectUser(rtnMap);
 		return rtnMap;
 	}
 }
