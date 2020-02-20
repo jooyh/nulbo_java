@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.userService">
 	<select id="selectUserInfo" parameterType="Map" resultType="Map">
-		SELECT USER_ID            AS userId
+		SELECT /* [mappers.userService.selectUserInfo] 사용자 정보 조회 */
+		       USER_ID            AS userId
 			 , USER_EMAIL         AS userEmail
 			 , USER_NAME          AS userName
 			 , USER_STATUS        AS userStatus
@@ -10,7 +11,89 @@
 			 , USER_PRF_IMG_NAME  AS userPrfImgName
 		  FROM NB_USER
 		 WHERE 1=1
-		   AND USER_EMAIL = #{userEmail}
-		   AND USER_PW    = #{userPw}
+		 <choose>
+		 	<when test="userPw != null">
+		 		AND USER_EMAIL = #{userEmail}
+		   		AND USER_PW    = #{userPw}
+		 	</when>
+		 	<otherwise>
+		 		AND USER_EMAIL = #{userEmail}
+		 	</otherwise>
+		 </choose>
 	</select>
+
+	<select id="selectDupleCheckEmail" parameterType="Map" resultType="Map">
+		SELECT /* [mappers.userService.selectDupleCheckEmail] 이메일 중복체크 */
+			   COUNT(*) AS CNT
+		  FROM NB_USER
+		 WHERE USER_EMAIL = #{userEmail}
+	</select>
+
+	<insert id="insertUserInfo" parameterType="Map">
+		INSERT /* [mappers.userService.insertUserInfo] 회원가입 */
+	 	  INTO NB_USER
+             ( USER_ID
+	         , USER_EMAIL
+	         , USER_PW
+	         , USER_NAME
+	         , USER_PRF_IMG_NAME
+	         , REG_DTM
+	         , UPD_DTM
+             ) VALUES
+             ( UUID()
+             , #{userEmail}
+             , #{userPw}
+             , #{userName}
+             , #{userPrfImgName}
+             , NOW()
+             , NOW()
+             )
+	</insert>
+
+	<select id="selectFollowCnt" parameterType="Map" resultType="int">
+		SELECT /* [mappers.userService.selectFollowCnt] 팔로우 수  (내가 팔로우 한 수) */
+			   COUNT(*) AS followCnt
+          FROM NB_FOLLOW
+         WHERE FOLLOW_REQ_ID = #{session.userId}
+	</select>
+
+	<select id="selectFollowerCnt" parameterType="Map" resultType="int">
+		SELECT /* [mappers.userService.selectFollowCnt] 팔로워 수 (나를 팔로우 한 수) */
+			   COUNT(*) AS followCnt
+          FROM NB_FOLLOW
+         WHERE FOLLOW_RES_ID = #{session.userId}
+	</select>
+
+	<select id="insertFollowInfo" parameterType="Map">
+		INSERT /* [mappers.userService.insertFollowInfo] 팔로우 등록 */
+		  INTO NB_FOLLOW
+             (
+               FOLLOW_REQ_ID
+             , FOLLOW_RES_ID
+             , REG_ID
+             , UPD_ID
+             , REG_DTM
+             , UPD_DTM
+             )
+        VALUES
+             (
+               #{session.userId}
+             , #{followResId}
+             , #{session.userId}
+             , #{session.userId}
+             , NOW()
+             , NOW()
+             )
+	</select>
+	<select id="selectUserList" parameterType="Map" resultType="Map">
+		SELECT /* [mappers.userService.selectUserList] 팔로우 등록 */
+			   USER_ID            AS userId
+             , USER_EMAIL         AS userEmail
+             , USER_NAME          AS userName
+             , USER_PRF_IMG_NAME  AS userPrfImgName
+          FROM NB_USER
+         WHERE USER_EMAIL LIKE CONCAT('%',#{userEmail},'%')
+            OR USER_NAME LIKE CONCAT('%',#{userName},'%')
+	</select>
+
 </mapper>

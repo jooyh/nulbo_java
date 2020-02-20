@@ -33,7 +33,7 @@
 	    <div class="profile-sumnail">
 	        <input type="file" />
 	        <div class="image-box">
-	            <img src="/images/img_user.png" alt="프로필">
+	            <img src="/resources/images/img_user.png" alt="프로필">
 	        </div>
 	    </div>
 	    <div class="login-form-box">
@@ -76,5 +76,5 @@
 	    </div>
 	</div>
 </section>
-<%@ include file="/resources/pagejs/login.js" %>
+<script src="/resources/pagejs/login.js"></script>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

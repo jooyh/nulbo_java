@@ -28,6 +28,7 @@ public class ServletConfiguration extends WebMvcConfigurerAdapter{
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+
     }
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {
@@ -42,6 +43,5 @@ public class ServletConfiguration extends WebMvcConfigurerAdapter{
     public void addInterceptors(InterceptorRegistry registry) {
     	registry.addInterceptor(new Interceptor());
     }
-
 }
 

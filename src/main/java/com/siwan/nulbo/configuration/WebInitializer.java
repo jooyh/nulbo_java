@@ -11,54 +11,40 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class WebInitializer implements WebApplicationInitializer{
-	 
-//    @Override
-//    public void onStartup(ServletContext servletContext) throws ServletException {        
-//        
-//        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-//        context.setConfigLocation("com.siwan.nulbo.configration");
-//        
-//        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(context));
-//        dispatcher.setLoadOnStartup(1);
-//        dispatcher.addMapping("/");
-//        
-//        
-//        // 인코딩 필터 적용
-//        FilterRegistration.Dynamic charaterEncodingFilter = servletContext.addFilter("charaterEncodingFilter", new CharacterEncodingFilter());
-//        charaterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-//        charaterEncodingFilter.setInitParameter("encoding", "UTF-8");
-//        charaterEncodingFilter.setInitParameter("forceEncoding", "true");
-//        
-//        
-//    }
+import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
 
-	
-	@Override 
-	public void onStartup(ServletContext servletContext) throws ServletException { 
-		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext(); 
-		rootContext.register(RootConfiguration.class); 
-		servletContext.addListener(new ContextLoaderListener(rootContext)); 
-		this.addDispatcherServlet(servletContext); 
-		this.addUtf8CharacterEncodingFilter(servletContext); 
-	} /** * Dispatcher Servlet 을 추가한다. 
-		* CORS 를 가능하게 하기 위해서 dispatchOptionsRequest 설정을 true 로 한다. 
-		* * @param servletContext */ 
-	private void addDispatcherServlet(ServletContext servletContext) { 
-		AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext(); 
-		applicationContext.getEnvironment().addActiveProfile("production"); 
-		applicationContext.register(ServletConfiguration.class); 
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(applicationContext)); 
-		dispatcher.setLoadOnStartup(1); 
-		dispatcher.addMapping("/"); 
+public class WebInitializer implements WebApplicationInitializer{
+
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		rootContext.register(RootConfiguration.class);
+		servletContext.addListener(new ContextLoaderListener(rootContext));
+		this.addDispatcherServlet(servletContext);
+		this.addUtf8CharacterEncodingFilter(servletContext);
+	} /** * Dispatcher Servlet 을 추가한다.
+		* CORS 를 가능하게 하기 위해서 dispatchOptionsRequest 설정을 true 로 한다.
+		* * @param servletContext */
+	private void addDispatcherServlet(ServletContext servletContext) {
+		AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
+		applicationContext.getEnvironment().addActiveProfile("production");
+		applicationContext.register(ServletConfiguration.class);
+		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(applicationContext));
+		dispatcher.setLoadOnStartup(1);
+		dispatcher.addMapping("/");
 		dispatcher.setInitParameter("dispatchOptionsRequest", "true");
 	}
 	// CORS 를 위해서 option request 도 받아들인다.
-	/** * UTF-8 캐릭터 인코딩 필터를 추가한다. * @param servletContext */ 
-	private void addUtf8CharacterEncodingFilter(ServletContext servletContext) { 
-		FilterRegistration.Dynamic filter = servletContext.addFilter("CHARACTER_ENCODING_FILTER", CharacterEncodingFilter.class); 
-		filter.setInitParameter("encoding", "UTF-8"); 
-		filter.setInitParameter("forceEncoding", "true"); 
-		filter.addMappingForUrlPatterns(null, false, "/*"); 
+	/** * UTF-8 캐릭터 인코딩 필터를 추가한다. * @param servletContext */
+	private void addUtf8CharacterEncodingFilter(ServletContext servletContext) {
+		FilterRegistration.Dynamic filter = servletContext.addFilter("CHARACTER_ENCODING_FILTER", CharacterEncodingFilter.class);
+		filter.setInitParameter("encoding", "UTF-8");
+		filter.setInitParameter("forceEncoding", "true");
+		filter.addMappingForUrlPatterns(null, false, "/*");
+	}
+
+	private void addXssEscapeServletFilter(ServletContext servletContext) {
+		FilterRegistration.Dynamic filter = servletContext.addFilter("xssEscapeServletFilter",XssEscapeServletFilter.class);
+		filter.addMappingForUrlPatterns(null, false, "/*");
 	}
 }

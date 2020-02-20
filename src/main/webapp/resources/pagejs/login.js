@@ -53,7 +53,7 @@ function fn_login () {
     loginData.userEmail = emailVal;
     loginData.userPw = pwVal;
     transaction(loginData,{
-        url : '/user/login.do'
+         url : '/user/login.do'
         ,success : function(result){
             console.log('login_result: ', result);
             sessionStorage.setItem("user",JSON.stringify(result[0]));
@@ -65,31 +65,15 @@ function fn_login () {
 function fn_check() {
     var input = document.getElementById("reg-email");
     var data = {};
-    data.email = input.value;
+    data.userEmail = input.value;
     transaction(data,{
-        url : '/user/idcheck.do'
+        url : '/user/emailCheck.do'
         ,success : function(result){
-            console.log(result);
-            var emailVal = $("#reg-email").val()
-             // 중복된 이메일인 경우
-            if(result[0].cnt > 0) {
-                $("#reg-email").parent(".input-box").addClass("error");
-                $("#email-notice").show().text("중복된 이메일입니다.");
-                $("#reg-email").attr("doubleCheck","N");
-                // 이메일 형식에 맞지 않는 경우
-            } else if(emailVal.indexOf("@") == -1) {
-                $("#reg-email").parent(".input-box").addClass("error");
-                $("#email-notice").hide();
-                $("#email-notice").show().text("이메일 형식이 아닙니다.");
-                $("#reg-email").attr("doubleCheck","N");
-            // 중복된 이메일이 아닌 경우
-            } else {
-                $("#reg-email").parent(".input-box").removeClass("error");
-                $("#email-notice").hide();
-                $("#reg-email").attr("doubleCheck","Y");
-                alert ("중복확인이 되었습니다.");
-            }
+        	console.error(result);
         }
+    	,error : function(e){
+    		console.log(e);
+    	}
     });
 }
 
@@ -158,6 +142,5 @@ function fn_inputValCheck() {
         $("#reg-re-pw").parent().removeClass("error");
         $("#reg-pw").parent().removeClass("error");
     }
-
     return flag;
 }

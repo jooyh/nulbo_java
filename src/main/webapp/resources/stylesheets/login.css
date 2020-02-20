@@ -10,7 +10,7 @@
 .login-content .login-form-box .input-box {position:relative;width:100%;height:45px;margin-top:20px;}
 .login-content .login-form-box .input-box input {width:100%;height:100%;padding:0 20px;border:none;border-radius:25px;box-shadow:0 0 15px #ccc;}
 .login-content .login-form-box .input-box.error input {box-shadow: 0 0 15px rgb(219, 20, 20);}
-.login-content .login-form-box .input-box .btn-clear {display:none;position:absolute;top:0;right:5px;width:45px;height:45px;border:none;background:url(/images/btn_input_clear.png) no-repeat center / 20px;font-size:0;}
+.login-content .login-form-box .input-box .btn-clear {display:none;position:absolute;top:0;right:5px;width:45px;height:45px;border:none;background:url(/resources/images/btn_input_clear.png) no-repeat center / 20px;font-size:0;}
 .login-content .login-form-box .input-btn-wrap {display:table;width:100%;}
 .login-content .login-form-box .input-btn-wrap .input-box {display:table-cell;margin-top:0;}
 .login-content .login-form-box .input-btn-wrap .btn-area {display:table-cell;margin-top:0;padding-left:15px;vertical-align:top;}
@@ -24,7 +24,7 @@
 .login-visual.h-animate .btn-back {display:inline-block;}
 
 .login-content .profile-sumnail {position:relative;width:100px;height:100px;margin:0 auto;margin-top:-50px;}
-.login-content .profile-sumnail:after {content:'';position:absolute;right:5px;bottom:0;width:20px;height:20px;background:url(/images/icon_plus.png) no-repeat #ccc;background-size:cover;border-radius:50%;}
+.login-content .profile-sumnail:after {content:'';position:absolute;right:5px;bottom:0;width:20px;height:20px;background:url(/resources/images/icon_plus.png) no-repeat #ccc;background-size:cover;border-radius:50%;}
 .login-content .profile-sumnail input[type="file"] {position:relative;z-index:10;width:100%;height:100%;opacity:0;}
 .login-content .profile-sumnail .image-box {position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;background:#fff;}
 .login-content .profile-sumnail .image-box img {width:100%;height:100%;}
@@ -34,7 +34,7 @@
 .check-agree input[type="checkbox"] + label {font-size:13px;color:#777;}
 .check-agree input[type="checkbox"] + label::before {content:'';display:inline-block;width:15px;height:15px;margin-right:10px;border:1px solid #ccc;border-radius:3px;vertical-align:middle;}
 .check-agree input[type="checkbox"]:checked + label::before {background:#ccc;}
- 
+
 @media screen and (min-width: 650px) {
     .login-content {width:500px;}
 }

@@ -4,8 +4,8 @@
  * ex) $(document).on("click","#testDiv",function(){
           alert("!");
        });
-       
-       
+
+
  */
 function fn_pageInit(){
     // 팝업 뒤로가기 버튼
@@ -23,7 +23,7 @@ function fn_pageInit(){
         }
     })
 
-    // 하단네비 새게시물 버튼 팝업 
+    // 하단네비 새게시물 버튼 팝업
     $(document).on("click",".btn-post",function(){
         $("#post_popup").fadeIn();
     });
@@ -35,17 +35,17 @@ function fn_pageInit(){
         } else {
             $(this).addClass("active");
         }
-    });  
+    });
 
     // 사용자 페이지 리스트 height style  (확인 필요)
     var postListWidth  = $(".user-post-list li").width();
     $(".user-post-list li").css("height",postListWidth);
-    
+
     $(window).resize(function() {
         var postListWidth  = $(".user-post-list li").width();
         $(".user-post-list li").css("height",postListWidth);
     })
-    // $(document).on("click",".tl-center",function(){ 
+    // $(document).on("click",".tl-center",function(){
     //     var iconGood = $(this).next(".tl-bottom").find(".icon-good")
     //     if (iconGood.hasClass("active")){
     //         iconGood.removeClass("active")
@@ -55,7 +55,7 @@ function fn_pageInit(){
     //         iconGood.addClass("active")
     //     }
     // });
-    // 팝업 엑스버튼 
+    // 팝업 엑스버튼
     // $(document).on("click",".btn-close",function(){
     //     $(this).parents(".pop-wrapper").hide();
     // });
@@ -64,26 +64,22 @@ function fn_pageInit(){
 
 
 function transaction(param,option){
+	var jsonStr = null;
+	if(param) jsonStr = JSON.stringify(param);
     $.ajax({
          url  : option.url
         ,type : option.type ? option.type : 'POST'
-        ,data : param ? param : {}
+        ,data : {jsonStr}
         ,timeout:100000
         ,success : function(result){
-            console.log(option.url , result);
-            if(result.code.search("SUCC") != -1){
-                if(option.success) option.success(result.data);
-            }else{
-                if(result.msg){
-                    alert(`${result.msg} (${result.code})`);
-                }
-            }
+            console.log("result",result);
         }
         ,error : function(e){
-            alert("시스템 오류가 발생했습니다.");
+        	if(option.error) option.error(e);
+        	else alert("시스템 오류가 발생했습니다.");
         }
         ,beforeSend:function(){
-            console.log("param ...",param);
+            console.log("param ...",jsonStr);
         }
         ,complete:function(){
         }
@@ -95,17 +91,17 @@ function fileTransaction(param,option){
     if(param){
         for(var key in param){
             formData.append(key,param[key])
-        } 
+        }
     }
 
-    $.ajax({ 
+    $.ajax({
         url: option.url
         , data: formData
         , enctype: 'multipart/form-data'
         , processData: false
         , contentType: false
         , type: 'POST'
-        , success: function(result){ 
+        , success: function(result){
             console.log(url , result);
             if(result.code.search("SUCC") != -1){
                 option.success(result.data);
@@ -114,7 +110,7 @@ function fileTransaction(param,option){
                     alert(result.msg+` (${result.code})`);
                 }
             }
-        } 
+        }
         ,error : function(e){
             alert("시스템 오류가 발생했습니다.");
         }
